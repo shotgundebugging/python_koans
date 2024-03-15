@@ -34,8 +34,32 @@ from runner.koan import *
 
 def score(dice):
     # You need to write this method
-    pass
+    total = 0
+    
+    values = {
+        1: 100,
+        5: 50
+    }
 
+    sorted_dice = sorted(dice)
+    dice_length = len(dice)
+    turn = 0
+    while turn < dice_length:
+        current_turn = sorted_dice[turn]
+
+        if (turn < (dice_length - 2)) and ((current_turn == sorted_dice[turn+1] == sorted_dice[turn+2])):
+            if current_turn == 1:
+                total += 1000
+            else:
+                total += current_turn * 100
+
+            turn += 3
+        else:
+            total += values.get(current_turn, 0)
+            turn += 1
+    
+    return total
+    
 class AboutScoringProject(Koan):
     def test_score_of_an_empty_list_is_zero(self):
         self.assertEqual(0, score([]))
